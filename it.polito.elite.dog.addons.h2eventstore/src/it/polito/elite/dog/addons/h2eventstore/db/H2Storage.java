@@ -34,17 +34,36 @@ public class H2Storage
 
 	// the jdbc connection object
 	private Connection connection;
+	
+	// the user name
+	private String user;
+	
+	// the pwd
+	private String password;
+	
+	//the db url
+	private String url;
 
 	// TODO: comment this
 	public H2Storage(String url, String user, String password)
 			throws SQLException
 	{
+		//store data
+		this.url = url;
+		this.user = user;
+		this.password = password;
+		
 		// open database connection
 		this.connection = DriverManager.getConnection(url, user, password);
 	}
 
-	public Connection getConnection()
+	public Connection getConnection() throws SQLException
 	{
+		//re-create the connection if it was closed by some "external event", e.g., errors on the db, etc.
+		if(this.connection.isClosed())
+			this.connection = DriverManager.getConnection(this.url, this.user, this.password);
+		
+		//return the connection
 		return this.connection;
 	}
 
