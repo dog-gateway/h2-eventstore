@@ -868,7 +868,7 @@ public class H2EventStore implements EventHandler, ManagedService, BundleTracker
 	@Override
 	public Object addingBundle(Bundle bundle, BundleEvent event)
 	{
-		if ((bundle.getSymbolicName().equals("org.h2"))
+		if ((bundle.getSymbolicName().equals("org.h2") || bundle.getSymbolicName().equals("com.h2database"))
 				&& ((h2Storage == null) || (devDao == null) || (notifDao == null) || (stateDao == null))
 				&& (this.databaseLocation != null) && (!this.databaseLocation.isEmpty()))
 		{
